@@ -4,9 +4,7 @@
 //
 
 #include <iostream>
-
-// Ваші файли загловки 
-//
+#include <string>
 #include "Lab6Example.h"
 int main()
 {
@@ -111,7 +109,119 @@ int main() {
 
     return 0;
 }
+    
+    
+//     Завдання 3
+    
+class Entity {
+protected:
+    string name;
+public:
+    Entity() {
+        name = "";
+    }
+    Entity(string n) {
+        name = n;
+    }
+    virtual void printInfo() = 0;
+    virtual void readInfo() = 0;
+    virtual ~Entity() {}
+};
 
+class Person : virtual public Entity {
+protected:
+    int age;
+public:
+    Person() : Entity() {
+        age = 0;
+    }
+    Person(string n, int a) : Entity(n) {
+        age = a;
+    }
+    virtual void printInfo() {
+        cout << "Name: " << name << ", Age: " << age << endl;
+    }
+    virtual void readInfo() {
+        cout << "Enter name: ";
+        cin >> name;
+        cout << "Enter age: ";
+        cin >> age;
+    }
+    virtual ~Person() {}
+};
+
+class Father : virtual public Person {
+protected:
+    string occupation;
+public:
+    Father() : Entity(), Person() {
+        occupation = "";
+    }
+    Father(string n, int a, string o) : Entity(n), Person(n, a) {
+        occupation = o;
+    }
+    virtual void printInfo() {
+        cout << "Name: " << name << ", Age: " << age << ", Occupation: " << occupation << endl;
+    }
+    virtual void readInfo() {
+        Person::readInfo();
+        cout << "Enter occupation: ";
+        cin >> occupation;
+    }
+    virtual ~Father() {}
+};
+
+class Mother : virtual public Person {
+protected:
+    string occupation;
+public:
+    Mother() : Entity(), Person() {
+        occupation = "";
+    }
+    Mother(string n, int a, string o) : Entity(n), Person(n, a) {
+        occupation = o;
+    }
+    virtual void printInfo() {
+        cout << "Name: " << name << ", Age: " << age << ", Occupation: " << occupation << endl;
+    }
+    virtual void readInfo() {
+        Person::readInfo();
+        cout << "Enter occupation: ";
+        cin >> occupation;
+    }
+    virtual ~Mother() {}
+};
+
+class Son : public Father, public Mother {
+protected:
+    string hobby;
+public:
+    Son() : Father(), Mother() {
+        hobby = "";
+    }
+    Son(string n, int a, string fo, string mo, string h) : Person(n, a), Father(n, a, fo), Mother(n, a, mo) {
+        hobby = h;
+    }
+    void printInfo() {
+        Father::printInfo();
+    }
+    void readInfo() {
+        Father::readInfo();
+        cout << "Enter hobby: ";
+        cin >> hobby;
+    }
+    virtual ~Son() {}
+};
+
+
+int main() {
+    Son son;
+    son.readInfo();
+    son.printInfo();
+    return 0;
+}
+    
+    
     Example();
 
 }
